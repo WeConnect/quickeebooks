@@ -7,6 +7,7 @@ module Quickeebooks
         include ActiveModel::Validations
         xml_accessor :address, :from => 'Address'
         xml_accessor :id, :from => 'Id'
+        xml_reader   :id_domain, :in => 'Id', :from => "@idDomain"
         xml_accessor :default, :from => 'Default'
         xml_accessor :tag, :from => 'Tag'
 

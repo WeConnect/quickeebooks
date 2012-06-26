@@ -3,6 +3,7 @@ module Quickeebooks
     module Model
       class InvoiceLineItem < Quickeebooks::Windows::Model::IntuitType
         xml_name 'Line'
+        xml_reader   :id_domain, :in => 'Id', :from => "@idDomain"
         xml_accessor :id, :from => 'Id'
         xml_accessor :desc, :from => 'Desc'
         xml_accessor :group_member, :from => 'GroupMember'
@@ -32,6 +33,15 @@ module Quickeebooks
         xml_accessor :custom2, :from => 'Custom2'
         xml_accessor :txn_id, :from => 'TxnId'
         xml_accessor :txn_line_id, :from => 'TxnLineId'
+        
+        def initialize(values = {})
+          self.item_id    = values[:item_id]
+          self.desc       = values[:desc]
+          self.amount     = values[:amount]
+          self.sales_tax_code_id = values[:sales_tax_code_id]
+          self.quantity   = values[:quantity]
+          self.unit_price = values[:unit_price]
+        end
       end
     end
   end

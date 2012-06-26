@@ -15,6 +15,7 @@ module Quickeebooks
         xml_accessor :note, :from => 'Note'
         xml_accessor :status, :from => 'Status'
         xml_accessor :customer_id, :from => 'CustomerId'
+        xml_accessor :customer_id_domain, :in => 'CustomerId', :from => "@idDomain"
         xml_accessor :customer_name, :from => 'CustomerName'
         xml_accessor :job_id, :from => 'JobId'
         xml_accessor :job_name, :from => 'JobName'
@@ -22,8 +23,6 @@ module Quickeebooks
         xml_accessor :remit_to_name, :from => 'RemitToName'
         xml_accessor :class_id, :from => 'ClassId'
         xml_accessor :class_name, :from => 'ClassName'
-        xml_accessor :sales_rep_id, :from => 'SalesRepId'
-        xml_accessor :sales_rep_name, :from => 'SalesRepName'
         xml_accessor :sales_rep_id, :from => 'SalesRepId'
         xml_accessor :sales_rep_name, :from => 'SalesRepName'
         xml_accessor :sales_tax_code_id, :from => 'SalesTaxCodeId'
@@ -57,6 +56,22 @@ module Quickeebooks
         xml_accessor :discount_account_id, :from => 'DiscountAccountId'
         xml_accessor :discount_account_name, :from => 'DiscountAccountName'
         xml_accessor :discount_taxable, :from => 'DiscountTaxable'
+        
+        
+        def initialize(values = {})
+          self.doc_number           = values[:doc_number]
+          self.msg                  = values[:msg]
+          self.note                 = values[:note]
+          self.status               = values[:status]
+          self.ar_account_id        = values[:ar_account_id]
+          self.due_date             = values[:due_date]
+          self.customer_id          = values[:customer_id]
+          self.customer_id_domain   = values[:customer_id_domain]
+          self.total_amount         = values[:total_amount]
+          self.to_be_printed        = values[:to_be_printed] ? 1 : 0
+          self.to_be_emailed        = values[:to_be_emailed] ? 1 : 0
+          self.custom               = values[:custom]
+        end
 
       end
     end

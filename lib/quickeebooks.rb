@@ -1,3 +1,6 @@
+libdir = File.expand_path(File.dirname(__FILE__))
+$LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
+
 require 'roxml'
 require 'nokogiri'
 require 'logger'
@@ -83,7 +86,12 @@ require 'quickeebooks/windows/model/price'
 require 'quickeebooks/windows/model/customer'
 require 'quickeebooks/windows/model/account'
 require 'quickeebooks/windows/model/item'
+require 'quickeebooks/windows/model/sales_tax_code'
+require 'quickeebooks/windows/model/customer_message'
 require 'quickeebooks/windows/service/service_base'
 require 'quickeebooks/windows/service/account'
 require 'quickeebooks/windows/service/customer'
+require 'quickeebooks/windows/service/invoice'
 require 'quickeebooks/windows/service/item'
+require 'quickeebooks/windows/service/sales_tax_code'
+require 'quickeebooks/windows/service/customer_message'

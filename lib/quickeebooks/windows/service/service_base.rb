@@ -69,6 +69,7 @@ module Quickeebooks
               results = []
               path_to_nodes = "//xmlns:RestResponse/xmlns:#{model::XML_COLLECTION_NODE}/xmlns:#{model::XML_NODE}"
               collection.count = xml.xpath(path_to_nodes).count
+#              debugger
               if collection.count > 0
                 xml.xpath(path_to_nodes).each do |xa|
                   entry = model.from_xml(xa)
@@ -99,13 +100,21 @@ module Quickeebooks
 
         def do_http(method, url, body, headers) # throws IntuitRequestException
           unless headers.has_key?('Content-Type')
-            headers.merge!({'Content-Type' => 'application/xml'})
+            headers.merge!({'Content-Type' => 'text/xml'})
           end
-          # puts "METHOD = #{method}"
-          # puts "URL = #{url}"
-          # puts "BODY = #{body == nil ? "<NIL>" : body}"
-          # puts "HEADERS = #{headers.inspect}"
+           puts "METHOD = #{method}"
+           puts "URL = #{url}"
+           puts "BODY = #{body == nil ? "<NIL>" : body}"
+           puts "HEADERS = #{headers.inspect}"
           response = @oauth.request(method, url, body, headers)
+          puts "="*100
+          puts "="*100
+          puts "RESPONSE"
+          puts "\n\n"
+          puts response.body
+          puts "\n\n"
+          puts "="*100
+          puts "="*100
           check_response(response)
         end
 
