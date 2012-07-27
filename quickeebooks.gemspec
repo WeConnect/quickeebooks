@@ -17,7 +17,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'roxml'
   gem.add_dependency 'oauth'
   gem.add_dependency 'nokogiri'
-  gem.add_dependency 'activemodel', '~> 3.2.3'
+  gem.add_dependency 'activemodel', '~> 3.1.0'
   
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rcov',   '~> 0.9.8'
