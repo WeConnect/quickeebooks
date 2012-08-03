@@ -38,8 +38,8 @@ module Quickeebooks
           xml = invoice.to_update_xml(@realm_id)
           response = do_http_post(url_for_resource("invoice"), xml)
           if response.code.to_i == 200
-            path_to_node = "//xmlns:RestResponse/xmlns:Success/xmlns:#{Quickeebooks::Windows::Model::Customer::XML_NODE}"
-            Quickeebooks::Windows::Model::Customer.from_xml_ns(response.body, path_to_node)
+            path_to_node = "//xmlns:RestResponse/xmlns:Success/xmlns:#{Quickeebooks::Windows::Model::Invoice::XML_NODE}"
+            Quickeebooks::Windows::Model::Invoice.from_xml_ns(response.body, path_to_node)
           else
             nil
           end
