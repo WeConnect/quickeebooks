@@ -65,6 +65,7 @@ module Quickeebooks
           self.status               = values[:status]
           self.ar_account_id        = values[:ar_account_id]
           self.due_date             = values[:due_date]
+          self.txn_date             = values[:txn_date]
           self.customer_id          = values[:customer_id]
           self.customer_id_domain   = values[:customer_id_domain]
           self.total_amount         = values[:total_amount]
