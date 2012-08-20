@@ -51,6 +51,7 @@ module Quickeebooks
                   xml.ToBeEmailed header.to_be_emailed
                   xml.Custom header.custom
                   xml.DueDate header.due_date.iso8601
+                  xml.TxnDate header.txn_date.iso8601
                   if header.billing_address
                     xml.BillAddr do
                       xml.Line1  header.billing_address.line1
