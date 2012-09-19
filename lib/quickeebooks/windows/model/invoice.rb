@@ -97,6 +97,7 @@ module Quickeebooks
                 xml.SyncToken sync_token  
                 xml.Header do
                   xml.DocNumber header.doc_number
+                  xml.TxnDate header.txn_date.iso8601
                   xml.Msg header.msg
                   xml.Note header.note
                   xml.Status header.status
