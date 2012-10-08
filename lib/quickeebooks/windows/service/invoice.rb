@@ -17,8 +17,8 @@ module Quickeebooks
         # per_page: +Fixnum+ How many results to fetch per page
         # sort: +Sort+ object
         # options: +Hash+ extra arguments
-        def list(filters = [], page = 1, per_page = 20, sort = nil, options = {})
-          fetch_collection("invoice", "Invoice", Quickeebooks::Windows::Model::Invoice, nil, filters, page, per_page, sort, options)
+        def list(custom_field_query = nil, filters = [], page = 1, per_page = 20, sort = nil, options = {})
+          fetch_collection("invoice", "Invoice", Quickeebooks::Windows::Model::Invoice, custom_field_query, filters, page, per_page, sort, options)
         end
         
         def create(invoice)
