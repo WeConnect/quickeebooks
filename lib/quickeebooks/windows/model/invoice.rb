@@ -9,10 +9,10 @@ module Quickeebooks
     module Model
       class Invoice < Quickeebooks::Windows::Model::IntuitType
         include ActiveModel::Validations
-        
+
         XML_COLLECTION_NODE = 'Invoices'
         XML_NODE = 'Invoice'
-        
+
         xml_convention :camelcase
         xml_accessor :id_domain, :in => 'Id', :from => "@idDomain"
         xml_accessor :id, :from => 'Id', :as => Integer
@@ -26,13 +26,13 @@ module Quickeebooks
         xml_accessor :header, :from => 'Header', :as => Quickeebooks::Windows::Model::InvoiceHeader
         xml_accessor :line_items, :from => 'Line', :as => [Quickeebooks::Windows::Model::InvoiceLineItem]
         xml_accessor :tax_line, :from => 'TaxLine', :as => Quickeebooks::Windows::Model::TaxLine
-        
+
         validates_length_of :line_items, :minimum => 1
-        
+
         def initialize
           ensure_line_items_initialization
         end
-        
+
         def to_create_xml(realm_id)
           builder = Nokogiri::XML::Builder.new do |xml|
             xml.Add('FullResponse' => "true",  'xmlns' => "http://www.intuit.com/sb/cdm/v2",  'xmlns:xsi' => "http://www.w3.org/2001/XMLSchema-instance", 'RequestId' => "#{ SecureRandom.hex}",  'xsi:schemaLocation' => "http://www.intuit.com/sb/cdm/V2./RestDataFilter.xsd") do
@@ -54,11 +54,11 @@ module Quickeebooks
                   xml.DueDate header.due_date.iso8601
                   if header.billing_address
                     xml.BillAddr do
-                      xml.Line1  header.billing_address.line1
-                      xml.Line2  header.billing_address.line2
-                      xml.Line3  header.billing_address.line3
-                      xml.Line4  header.billing_address.line4
-                      xml.Line5  header.billing_address.line5
+                      xml.Line1  header.billing_address.line1 if header.billing_address.line1
+                      xml.Line2  header.billing_address.line2 if header.billing_address.line2
+                      xml.Line3  header.billing_address.line3 if header.billing_address.line3
+                      xml.Line4  header.billing_address.line4 if header.billing_address.line4
+                      xml.Line5  header.billing_address.line5 if header.billing_address.line5
                       xml.City   header.billing_address.city
                       xml.Country header.billing_address.country
                       xml.PostalCode header.billing_address.postal_code
@@ -84,9 +84,9 @@ module Quickeebooks
             end
           end
           builder.to_xml    
-          
+
         end
-        
+
         def to_update_xml(realm_id)
           builder = Nokogiri::XML::Builder.new do |xml|
             xml.Mod('FullResponse' => "true",  'xmlns' => "http://www.intuit.com/sb/cdm/v2",  'xmlns:xsi' => "http://www.w3.org/2001/XMLSchema-instance", 'RequestId' => "#{ SecureRandom.hex}",  'xsi:schemaLocation' => "http://www.intuit.com/sb/cdm/V2./RestDataFilter.xsd") do
@@ -110,11 +110,11 @@ module Quickeebooks
                   xml.DueDate header.due_date.iso8601
                   if header.billing_address
                     xml.BillAddr do
-                      xml.Line1  header.billing_address.line1
-                      xml.Line2  header.billing_address.line2
-                      xml.Line3  header.billing_address.line3
-                      xml.Line4  header.billing_address.line4
-                      xml.Line5  header.billing_address.line5
+                      xml.Line1  header.billing_address.line1 if header.billing_address.line1
+                      xml.Line2  header.billing_address.line2 if header.billing_address.line2
+                      xml.Line3  header.billing_address.line3 if header.billing_address.line3
+                      xml.Line4  header.billing_address.line4 if header.billing_address.line4
+                      xml.Line5  header.billing_address.line5 if header.billing_address.line5
                       xml.City   header.billing_address.city
                       xml.Country header.billing_address.country
                       xml.PostalCode header.billing_address.postal_code
@@ -140,33 +140,42 @@ module Quickeebooks
               end
             end
           end
-          builder.to_xml    
-          
+          builder.to_xml
         end
-        
+
+        def to_revert_xml
+          builder = Nokogiri::XML::Builder.new do |xml|
+            xml.Revert('RequestId' => "#{ SecureRandom.hex}", 'xmlns' => "http://www.intuit.com/sb/cdm/v2") do
+              xml.Object('xsi:type' => 'Invoice', 'xmlns:xsi' => "http://www.w3.org/2001/XMLSchema-instance") do
+                xml.Id id, :idDomain => id_domain
+              end
+            end
+          end
+          builder.to_xml
+        end
+
         def self.from_xml_ns(xml, path_to_node = "//xmlns:RestResponse/xmlns:#{XML_COLLECTION_NODE}/xmlns:#{XML_NODE}")
           nodes = Nokogiri::XML(xml).xpath(path_to_node)
-          
+
           if nodes.count > 0
             from_xml(nodes.first)
           else
             nil
           end
-          
+
         end
-        
-        
+
         private
-        
+
         def after_parse
         end
-        
+
         def ensure_line_items_initialization
           self.line_items ||= []
         end
-        
+
       end
     end
   end
-  
+
 end

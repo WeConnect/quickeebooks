@@ -20,7 +20,7 @@ module Quickeebooks
         def list(custom_field_query = nil, filters = [], page = 1, per_page = 20, sort = nil, options = {})
           fetch_collection("invoice", "Invoice", Quickeebooks::Windows::Model::Invoice, custom_field_query, filters, page, per_page, sort, options)
         end
-        
+
         def create(invoice)
           raise InvalidModelException unless invoice.valid?
           xml = invoice.to_create_xml(@realm_id)
@@ -32,9 +32,9 @@ module Quickeebooks
             nil
           end
         end 
-        
+
         def update(invoice)
-#          raise InvalidModelException.new("Missing required parameters for update") unless invoice.valid_for_update?
+          #          raise InvalidModelException.new("Missing required parameters for update") unless invoice.valid_for_update?
           xml = invoice.to_update_xml(@realm_id)
           response = do_http_post(url_for_resource("invoice"), xml)
           if response.code.to_i == 200
@@ -44,7 +44,7 @@ module Quickeebooks
             nil
           end
         end     
-        
+
         def fetch_by_id(id, params = {:idDomain => 'QB'})
           url = "#{url_for_resource("invoice")}/#{id}"
           response = do_http_get(url, params)
@@ -54,6 +54,17 @@ module Quickeebooks
             nil
           end
         end          
+
+        def revert(invoice)
+          xml = invoice.to_revert_xml
+          response = do_http_post(url_for_resource("invoice"), xml)
+          if response.code.to_i == 200
+            path_to_node = "//xmlns:RestResponse/xmlns:Success"
+            Quickeebooks::Windows::Model::Invoice.from_xml_ns(response.body, path_to_node)
+          else
+            nil
+          end          
+        end
 
       end
     end
