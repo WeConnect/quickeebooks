@@ -54,11 +54,11 @@ module Quickeebooks
                   xml.DueDate header.due_date.iso8601
                   if header.billing_address
                     xml.BillAddr do
-                      xml.Line1  header.billing_address.line1 if header.billing_address.line1
-                      xml.Line2  header.billing_address.line2 if header.billing_address.line2
-                      xml.Line3  header.billing_address.line3 if header.billing_address.line3
-                      xml.Line4  header.billing_address.line4 if header.billing_address.line4
-                      xml.Line5  header.billing_address.line5 if header.billing_address.line5
+                      xml.Line1  header.billing_address.line1
+                      xml.Line2  header.billing_address.line2
+                      xml.Line3  header.billing_address.line3
+                      xml.Line4  header.billing_address.line4
+                      xml.Line5  header.billing_address.line5
                       xml.City   header.billing_address.city
                       xml.Country header.billing_address.country
                       xml.PostalCode header.billing_address.postal_code
@@ -110,11 +110,11 @@ module Quickeebooks
                   xml.DueDate header.due_date.iso8601
                   if header.billing_address
                     xml.BillAddr do
-                      xml.Line1  header.billing_address.line1 if header.billing_address.line1
-                      xml.Line2  header.billing_address.line2 if header.billing_address.line2
-                      xml.Line3  header.billing_address.line3 if header.billing_address.line3
-                      xml.Line4  header.billing_address.line4 if header.billing_address.line4
-                      xml.Line5  header.billing_address.line5 if header.billing_address.line5
+                      xml.Line1  header.billing_address.line1
+                      xml.Line2  header.billing_address.line2
+                      xml.Line3  header.billing_address.line3
+                      xml.Line4  header.billing_address.line4
+                      xml.Line5  header.billing_address.line5
                       xml.City   header.billing_address.city
                       xml.Country header.billing_address.country
                       xml.PostalCode header.billing_address.postal_code
