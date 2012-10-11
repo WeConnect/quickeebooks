@@ -63,9 +63,19 @@ module Quickeebooks
             Quickeebooks::Windows::Model::Invoice.from_xml_ns(response.body, path_to_node)
           else
             nil
-          end          
+          end        
         end
 
+        def delete(invoice)
+          xml = invoice.to_delete_xml
+          response = do_http_post(url_for_resource("invoice"), xml)
+          if response.code.to_i == 200
+            path_to_node = "//xmlns:RestResponse/xmlns:Success"
+            Quickeebooks::Windows::Model::Invoice.from_xml_ns(response.body, path_to_node)
+          else
+            nil
+          end        
+        end
       end
     end
   end

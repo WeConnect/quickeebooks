@@ -154,6 +154,17 @@ module Quickeebooks
           builder.to_xml
         end
 
+        def to_delete_xml
+          builder = Nokogiri::XML::Builder.new do |xml|
+            xml.Del('RequestId' => "#{ SecureRandom.hex}", 'xmlns' => "http://www.intuit.com/sb/cdm/v2") do
+              xml.Object('xsi:type' => 'Invoice', 'xmlns:xsi' => "http://www.w3.org/2001/XMLSchema-instance") do
+                xml.Id id, :idDomain => id_domain
+              end
+            end
+          end
+          builder.to_xml
+        end
+        
         def self.from_xml_ns(xml, path_to_node = "//xmlns:RestResponse/xmlns:#{XML_COLLECTION_NODE}/xmlns:#{XML_NODE}")
           nodes = Nokogiri::XML(xml).xpath(path_to_node)
 
