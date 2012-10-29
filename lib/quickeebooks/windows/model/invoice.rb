@@ -42,9 +42,9 @@ module Quickeebooks
                 xml.Header do
                   xml.DocNumber header.doc_number
                   xml.TxnDate header.txn_date.iso8601
-                  xml.Msg header.msg
-                  xml.Note header.note
-                  xml.Status header.status
+                  xml.Msg header.msg unless header.msg.blank?
+                  xml.Note header.note unless header.note.blank?
+                  xml.Status header.status unless header.status.blank?
                   xml.CustomerId header.customer_id, :idDomain => header.customer_id_domain
                   xml.TotalAmt header.total_amount if header.total_amount
                   #                  xml.ARAccountID header.ar_account_id, :idDomain => "QB"
@@ -98,9 +98,9 @@ module Quickeebooks
                 xml.Header do
                   xml.DocNumber header.doc_number
                   xml.TxnDate header.txn_date.iso8601
-                  xml.Msg header.msg
-                  xml.Note header.note
-                  xml.Status header.status
+                  xml.Msg header.msg unless header.msg.blank?
+                  xml.Note header.note unless header.note.blank?
+                  xml.Status header.status unless header.status.blank?
                   xml.CustomerId header.customer_id, :idDomain => header.customer_id_domain
                   xml.TotalAmt header.total_amount if header.total_amount
                   #                  xml.ARAccountID header.ar_account_id, :idDomain => "QB"
