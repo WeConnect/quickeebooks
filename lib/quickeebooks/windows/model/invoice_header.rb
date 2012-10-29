@@ -68,6 +68,7 @@ module Quickeebooks
           self.txn_date             = values[:txn_date]
           self.customer_id          = values[:customer_id]
           self.customer_id_domain   = values[:customer_id_domain]
+          self.customer_name        = values[:customer_name]
           self.total_amount         = values[:total_amount]
           self.to_be_printed        = values[:to_be_printed] ? 1 : 0
           self.to_be_emailed        = values[:to_be_emailed] ? 1 : 0
