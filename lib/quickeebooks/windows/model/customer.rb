@@ -106,6 +106,22 @@ module Quickeebooks
               xml.Customer do
                 xml.TypeOf 'Person'
                 xml.Name name
+                if addresses.present?
+                  addresses.each do |address|
+                    xml.Address do
+                      xml.Line1  address.line1 if address.line1
+                      xml.Line2  address.line2 if address.line2
+                      xml.Line3  address.line3 if address.line3
+                      xml.Line4  address.line4 if address.line4
+                      xml.Line5  address.line5 if address.line5
+                      xml.City   address.city if address.city
+                      xml.Country address.country if address.country
+                      xml.PostalCode address.postal_code if address.postal_code
+                      xml.Default address.default
+                      xml.Tag address.tag
+                    end
+                  end
+                end
                 # Customer Phone Numbers --start
                 if phones.present?
                   phones.each do |phone|
@@ -139,6 +155,22 @@ module Quickeebooks
                 xml.PartyReferenceId party_reference_id, :idDomain => party_reference_id_domain
                 xml.TypeOf 'Person'
                 xml.Name name
+                if addresses.present?
+                  addresses.each do |address|
+                    xml.Address do
+                      xml.Line1  address.line1 if address.line1
+                      xml.Line2  address.line2 if address.line2
+                      xml.Line3  address.line3 if address.line3
+                      xml.Line4  address.line4 if address.line4
+                      xml.Line5  address.line5 if address.line5
+                      xml.City   address.city if address.city
+                      xml.Country address.country if address.country
+                      xml.PostalCode address.postal_code if address.postal_code
+                      xml.Default address.default
+                      xml.Tag address.tag
+                    end
+                  end
+                end
                 # Customer Phone Numbers --start
                 if phones.present?
                   phones.each do |phone|
