@@ -17,16 +17,18 @@ module Quickeebooks
 
         attr_accessor :realm_id
         attr_accessor :oauth
+        attr_accessor :print_log
         attr_reader :base_uri
         attr_reader :last_response_body
         attr_reader :last_response_xml
 
         XML_NS = %{xmlns:ns2="http://www.intuit.com/sb/cdm/qbo" xmlns="http://www.intuit.com/sb/cdm/v2" xmlns:ns3="http://www.intuit.com/sb/cdm"}
 
-        def initialize(oauth_access_token, realm_id)
+        def initialize(oauth_access_token, realm_id, print_log=false)
           @base_uri = 'https://services.intuit.com/sb'
           @oauth = oauth_access_token
           @realm_id = realm_id
+          @print_log = print_log
         end
 
         def url_for_resource(resource)
@@ -102,19 +104,23 @@ module Quickeebooks
           unless headers.has_key?('Content-Type')
             headers.merge!({'Content-Type' => 'text/xml'})
           end
-           puts "METHOD = #{method}"
-           puts "URL = #{url}"
-           puts "BODY = #{body == nil ? "<NIL>" : body}"
-           puts "HEADERS = #{headers.inspect}"
+          if @print_log
+            puts "METHOD = #{method}"
+            puts "URL = #{url}"
+            puts "BODY = #{body == nil ? "<NIL>" : body}"
+            puts "HEADERS = #{headers.inspect}"
+          end
           response = @oauth.request(method, url, body, headers)
-          puts "="*100
-          puts "="*100
-          puts "RESPONSE"
-          puts "\n\n"
-          puts response.body
-          puts "\n\n"
-          puts "="*100
-          puts "="*100
+          if @print_log
+            puts "="*100
+            puts "="*100
+            puts "RESPONSE"
+            puts "\n\n"
+            puts response.body
+            puts "\n\n"
+            puts "="*100
+            puts "="*100
+          end
           check_response(response)
         end
 
