@@ -197,22 +197,23 @@ module Quickeebooks
           builder.to_xml    
         end
         
-        def to_revert_xml
-          builder = Nokogiri::XML::Builder.new do |xml|
-            xml.Revert('RequestId' => "#{ SecureRandom.hex}", 'xmlns' => "http://www.intuit.com/sb/cdm/v2") do
-              xml.Object('xsi:type' => 'Customer', 'xmlns:xsi' => "http://www.w3.org/2001/XMLSchema-instance") do
-                xml.Id id, :idDomain => id_domain
-              end
-            end
-          end
-          builder.to_xml
-        end
+        # def to_revert_xml
+        #   builder = Nokogiri::XML::Builder.new do |xml|
+        #     xml.Revert('RequestId' => "#{ SecureRandom.hex}", 'xmlns' => "http://www.intuit.com/sb/cdm/v2") do
+        #       xml.Object('xsi:type' => 'Customer', 'xmlns:xsi' => "http://www.w3.org/2001/XMLSchema-instance") do
+        #         xml.Id id, :idDomain => id_domain
+        #       end
+        #     end
+        #   end
+        #   builder.to_xml
+        # end
 
         def to_delete_xml
           builder = Nokogiri::XML::Builder.new do |xml|
             xml.Del('RequestId' => "#{ SecureRandom.hex}", 'xmlns' => "http://www.intuit.com/sb/cdm/v2") do
               xml.Object('xsi:type' => 'Customer', 'xmlns:xsi' => "http://www.w3.org/2001/XMLSchema-instance") do
                 xml.Id id, :idDomain => id_domain
+                xml.SyncToken sync_token                
               end
             end
           end
