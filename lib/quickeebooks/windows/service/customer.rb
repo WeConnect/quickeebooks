@@ -6,8 +6,8 @@ module Quickeebooks
     module Service
       class Customer < Quickeebooks::Windows::Service::ServiceBase
 
-        def list(filters = [], page = 1, per_page = 20, sort = nil, options = {})
-          fetch_collection("customer", "Customer", Quickeebooks::Windows::Model::Customer, nil, filters, page, per_page, sort, options)
+        def list(filters = [], page = 1, per_page = 20, sort = nil, options = {}, custom_field_query = nil)
+          fetch_collection("customer", "Customer", Quickeebooks::Windows::Model::Customer, custom_field_query, filters, page, per_page, sort, options)
         end
         
         def fetch_by_id(id, params = {:idDomain => 'QB'})
@@ -45,6 +45,28 @@ module Quickeebooks
             nil
           end
         end
+        
+        def revert(customer)
+          xml = customer.to_revert_xml
+          response = do_http_post(url_for_resource("customer"), xml)
+          if response.code.to_i == 200
+            path_to_node = "//xmlns:RestResponse/xmlns:Success"
+            Quickeebooks::Windows::Model::Customer.from_xml_ns(response.body, path_to_node)
+          else
+            nil
+          end        
+        end
+
+        def delete(customer)
+          xml = customer.to_delete_xml
+          response = do_http_post(url_for_resource("customer"), xml)
+          if response.code.to_i == 200
+            path_to_node = "//xmlns:RestResponse/xmlns:Success"
+            Quickeebooks::Windows::Model::Customer.from_xml_ns(response.body, path_to_node)
+          else
+            nil
+          end        
+        end        
       end
     end
   end
